@@ -1,8 +1,9 @@
-from flask import Flask, request, jsonify
-from app.services.feedback_services import analyze_feedback, analyze_spam
+from flask import Flask, request, jsonify, Blueprint
+from app.utils.feedback_utils import analyze_feedback, analyze_spam
+from app.utils.database_utils import *
 import json
 
-feedback = Flask(__name__)
+feedback = Blueprint('feedback', __name__)
 
 @feedback.route('/feedback', methods=['POST'])
 def receive_feedback():
@@ -17,14 +18,16 @@ def receive_feedback():
                         })
 
                 feedback_processed = analyze_feedback(feedback_data)
-                print(feedback_processed)
                 response = json.loads(feedback_processed)
                 
-                response["id"] = "123"
+                code_id = insert_code(response['requested_features'][0]['code'])
+                sentiment_id = select_sentiment(response['sentiment'])
+                feedback_id = insert_feedback(feedback_data, code_id, sentiment_id, response['requested_features'][0]['reason'])
+                
+                response["id"] = feedback_id
+                
+                print(response)
                 
                 return response
         except Exception as e:
                 return {"error": "Ocorreu um erro durante a análise do feedback"}
-
-if __name__ == '__main__':
-    feedback.run(debug=True)
