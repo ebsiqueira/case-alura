@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, Blueprint
+from flask import request, jsonify, Blueprint
 from app.utils.feedback_utils import analyze_feedback, analyze_spam
 from app.utils.database_utils import *
 import json
@@ -13,9 +13,7 @@ def receive_feedback():
                 feedback_data = data.get('feedback')
                 
                 if(analyze_spam(feedback_data) == 'Sim'):
-                        return jsonify({
-                                "processed": False, "message": "SPAM detectado"
-                        })
+                        return jsonify({"processed": False, "message": "SPAM detectado"})
 
                 feedback_processed = analyze_feedback(feedback_data)
                 response = json.loads(feedback_processed)
@@ -25,8 +23,6 @@ def receive_feedback():
                 feedback_id = insert_feedback(feedback_data, code_id, sentiment_id, response['requested_features'][0]['reason'])
                 
                 response["id"] = feedback_id
-                
-                print(response)
                 
                 return response
         except Exception as e:

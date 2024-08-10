@@ -1,8 +1,6 @@
-from flask import Flask, request, jsonify, render_template, Blueprint
-from app.utils.feedback_utils import analyze_feedback, analyze_spam
+from flask import request, render_template, Blueprint
 from app.utils.database_utils import *
 import requests
-import json
 
 pages = Blueprint('pages', __name__, template_folder='../templates')
 
@@ -18,12 +16,18 @@ def send_feedback():
         
         rq = requests.post("http://127.0.0.1:5000/feedback", json = {"feedback": text})
         
-    
     return render_template('send_feedback.html')
 
 @pages.route('/display_feedbacks')
 def display_feedbacks():
     
     feedbacks = select_feedbacks()
+
+    return render_template('display_feedbacks.html', data=feedbacks)
+
+@pages.route('/display_statistics')
+def display_statistics():
     
-    return render_template('display_feedbacks.html')
+    statistics = select_sentiments()
+
+    return render_template('display_statistics.html', json_data=statistics)
