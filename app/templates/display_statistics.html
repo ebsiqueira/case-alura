@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráfico de Pizza</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        position: relative;
+    }
+
+    .back-button {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        padding: 10px;
+        font-size: 20px;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        background-color: #555;
+        color: white;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+    }
+
+    .back-button:hover {
+        background-color: #333;
+    }
+
+    .form-container {
+        text-align: center;
+    }
+
+    .form-container textarea {
+        width: 300px;
+        height: 100px;
+        padding: 15px;
+        margin: 10px 0;
+        font-size: 18px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        resize: none;
+        overflow-y: auto;
+    }
+
+    .form-container button {
+        width: 150px;
+        padding: 15px;
+        font-size: 18px;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        background-color: #4CAF50;
+        color: white;
+        display: block;
+        margin: 10px auto;
+    }
+
+    .form-container button:hover {
+        background-color: #45a049;
+    }
+</style>
+
+<body>
+    <a href='http://127.0.0.1:5000/home' class="back-button">&#8592;</a>
+    <div class="container">
+        <h2>Gráfico de Pizza - Resultados</h2>
+        <canvas id="myPieChart" width="500" height="500"></canvas>
+    </div>
+
+    <script>
+        // JSON de exemplo passado a partir do backend
+        const data = {{ json_data | tojson }};
+
+        const backgroundColors = {
+            'POSITIVO': '#4CAF50',  // Verde
+            'NEGATIVO': '#F44336',  // Vermelho
+            'INCONCLUSIVO': '#FFC107'  // Amarelo
+        };
+
+        // Configuração do gráfico de pizza
+        const ctx = document.getElementById('myPieChart').getContext('2d');
+        const myPieChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: Object.keys(data),  // Nomes das categorias
+                datasets: [{
+                    data: Object.values(data),  // Valores das categorias
+                    backgroundColor: Object.keys(data).map(key => backgroundColors[key])
+                }]
+            },
+            options: {
+                responsive: false,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                let total = tooltipItem.dataset.data.reduce((a, b) => a + b, 0);
+                                let value = tooltipItem.raw;
+                                let percentage = ((value / total) * 100).toFixed(2);
+                                return `${tooltipItem.label}: ${value} (${percentage}%)`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

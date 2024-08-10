@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <title>Feedback Table</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <title>Feedbacks</title>
 </head>
+
 <style>
     body {
         display: flex;
@@ -81,44 +82,56 @@
     .details-button:hover {
         background-color: #45a049;
     }
-</style>    
+</style>
+
+<script>
+    $(document).ready(function(){
+        $('#data').after('<div id="nav"></div>');
+        var rowsShown = 4;
+        var rowsTotal = $('#data tbody tr').length;
+        var numPages = rowsTotal/rowsShown;
+        for(i = 0;i < numPages;i++) {
+            var pageNum = i + 1;
+            $('#nav').append('<a href="#" rel="'+i+'">'+pageNum+'</a> ');
+        }
+        $('#data tbody tr').hide();
+        $('#data tbody tr').slice(0, rowsShown).show();
+        $('#nav a:first').addClass('active');
+        $('#nav a').bind('click', function(){
+
+            $('#nav a').removeClass('active');
+            $(this).addClass('active');
+            var currPage = $(this).attr('rel');
+            var startItem = currPage * rowsShown;
+            var endItem = startItem + rowsShown;
+            $('#data tbody tr').css('opacity','0.0').hide().slice(startItem, endItem).
+                    css('display','table-row').animate({opacity:1}, 300);
+        });
+    });
+</script>   
 <body>
     <a href='http://127.0.0.1:5000/home' class="back-button">&#8592;</a>
     <div class="table-container">
-        <table>
+        <table id="data">
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Feedback</th>
-                    <th>Status</th>
-                    <th>Ação</th>
+                    <th>Opinião</th>
+                    <th>Código</th>
+                    <th>Razão</th>
                 </tr>
             </thead>
             <tbody>
+                {% for item in data%}
                 <tr>
-                    <td>1</td>
-                    <td>Excelente serviço!</td>
-                    <td>Positivo</td>
-                    <td><button class="details-button">Mais detalhes</button></td>
+                    <td>{{item[0]}}</td>
+                    <td>{{item[1]}}</td>
+                    <td>{{item[6]}}</td>
+                    <td>{{item[8]}}</td>
+                    <td>{{item[4]}}</td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Precisa melhorar o atendimento.</td>
-                    <td>Negativo</td>
-                    <td><button class="details-button">Mais detalhes</button></td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Produto de alta qualidade.</td>
-                    <td>Positivo</td>
-                    <td><button class="details-button">Mais detalhes</button></td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>Entrega atrasada.</td>
-                    <td>Negativo</td>
-                    <td><button class="details-button">Mais detalhes</button></td>
-                </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>
