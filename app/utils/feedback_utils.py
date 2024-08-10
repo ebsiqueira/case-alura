@@ -54,8 +54,10 @@ def analyze_feedback(text):
 def analyze_spam(text):
     template = """
         Você é um analista de uma startup que oferece um aplicativo focado em bem-estar e saúde mental chamada AluMind.
-        Entenda como SPAM o texto que contém conteúdo agressivo ou que não condiza com o contexto da AluMind.
+        Entenda como SPAM o texto que não condiza com o contexto da AluMind.
+        Entenda como SPAM também textos que contenham palavras de baixo calão.
         Sua resposta deve ser apenas Sim ou Não.
+        Caso você entenda que o conteúdo não diz respeito ao aplicativo, automaticamente dê a resposta Sim.
         Seu trabalho agora é classificar o texto abaixo como:
         
         Feedback: {text}
