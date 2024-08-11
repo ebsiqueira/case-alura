@@ -46,7 +46,7 @@ A estrutura do projeto seguiu os padrões recomendados pela documentação da bi
 
 A estrutura do banco segue a seguinte modelagem: 
 
-<img src="docs/modelagem_db.png" width="600px">
+<img src="docs/modelagem_db.png">
 
 ## Telas <a id="telas"/>
 
@@ -54,19 +54,19 @@ Visando uma melhor interação com o sistema, foi desevolvido algumas telas para
 
 A primeira tela consiste de um simples menu para seleção de operações:  
 
-<img src="docs/menu.png" width="600px">
+<img src="docs/menu.png">
 
 A primeira opção do menu retrata uma tela para envio de feedbacks, conforme a imagem a seguir:
 
-<img src="docs/digitar.png" width="600px">
+<img src="docs/digitar.png">
 
 Em seguida, temos uma tela simples com a listagem de todos os feedbacks cadastrados:
 
-<img src="docs/listagem.png" width="600px">
+<img src="docs/listagem.png">
 
 Por fim, temos a tela com as estatísticas obtidas a partir das avaliações cadastradas:
 
-<img src="docs/grafico.png" width="600px">
+<img src="docs/grafico.png">
 
 ## Ferramentas <a id="ferramentas"/>
 
