@@ -5,13 +5,13 @@ from langchain.chains import LLMChain
 from langchain.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI
 
-load_dotenv()
-
-openai.api_key = os.getenv('API_KEY')
-
-llm = ChatOpenAI(api_key=openai.api_key, model="gpt-4o", temperature=0.1, max_tokens=1000, timeout=None, max_retries=2)
-
 def analyze_feedback(text):
+    load_dotenv()
+
+    openai.api_key = os.getenv('API_KEY')
+
+    llm = ChatOpenAI(api_key=openai.api_key, model="gpt-4o", temperature=0.1, max_tokens=1000, timeout=None, max_retries=2)
+    
     template = """
         Você é um analista de uma startup que oferece um aplicativo focado em bem-estar e saúde mental chamada AluMind. 
         Seu trabalho é analisar o feedback do usuário e fornecer:
@@ -52,6 +52,12 @@ def analyze_feedback(text):
         return {"error": "Ocorreu um erro durante a análise do feedback"}
     
 def analyze_spam(text):
+    load_dotenv()
+
+    openai.api_key = os.getenv('API_KEY')
+
+    llm = ChatOpenAI(api_key=openai.api_key, model="gpt-4o", temperature=0.1, max_tokens=1000, timeout=None, max_retries=2)
+    
     template = """
         Você é um analista de uma startup que oferece um aplicativo focado em bem-estar e saúde mental chamada AluMind.
         Entenda como SPAM o texto que não condiza com o contexto da AluMind.
