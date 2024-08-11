@@ -17,7 +17,7 @@ def analyze_feedback(text):
         Seu trabalho é analisar o feedback do usuário e fornecer:
         - Um sentimento
         - Um código
-        - Uma razão
+        - Uma possível melhoria
 
         O sentimento fornecido deve ser uma das seguintes categorias:
         - POSITIVO: O feedback deve ter um caráter positivo, elogiando ou destacando positivamente características do aplicativo. Exemplo: Gosto muito de usar o Alumind!
@@ -31,7 +31,7 @@ def analyze_feedback(text):
             - SUBSTANTIVO
             Exemplos: EDITAR_PERFIL, MENU, CADASTRAR
             
-        Já a razão deve ser um resumo do feedback. Exemplo: O usuário gostaria de realizar a edição do próprio perfil.
+        Já a possível melhoria deve ser uma possível melhoria para o aplicativo obtido no texto do feedback. Exemplo: O usuário gostaria de realizar a edição do próprio perfil.
             
         Não utilize o caracter ` nem a palavra json na sua resposta.    
             
