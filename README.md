@@ -38,7 +38,7 @@ A estrutura do projeto seguiu os padrões recomendados pela documentação da bi
 - Main: Inicia o app e levanta os serviços
 - Database: possui o arquivo para inicialização do banco, bem como valores pré-definidos para algumas tabelas.
 - Endpoits: possui os endpoints (ou rotas, como denominado na documentação da biblioteca Flask) para a análise dos feedbacks, bem como para as páginas que foram desenvolvidas.
-- Static: possui os arquivos de estilos CSS e scripts JavaScript (vazio, conforme informado em [[Decisões de projeto](#projeto)])
+- Static: possui os arquivos de estilos CSS e scripts JavaScript
 - Templates: possui os arquivos HTML das páginas criadas para o projeto.
 - Utils: possui as funções úteis para acesso ao banco de dados e de suporte a análise do feedback.
 - Docs: possui arquivos de documentação do projeto.
@@ -105,7 +105,7 @@ Retorno:
     "requested_features": [
         {
             "code": "USAR_MEDITAÇÃO",
-            "reason": "O usuário gostou das aulas de meditação e sentiu que elas ajudaram muito."
+            "reason": "O usuário gostaria de realizar a edição do próprio perfil."
         }
     ]
 } 
@@ -179,8 +179,6 @@ Algumas decisões de projeto foram tomadas ao longo do desenvolvimento, baseadas
 
 - Optou-se por não salvar e nem manter registro dos feedbacks que representem SPAM. Assim, existe uma checagem de SPAM no começo do processamento do feedback apenas para conferir se o fluxo prosseguirá como esperado.
 
-- Para o design do frontend, os scripts e styles ficaram no próprio corpo das suas respectivas páginas HTML. Sabe-se que isso não é uma boa prática de design, porém um bug nas rotas para o carregamento destes arquivos estáticos persistiu até o fim do desenvolvimento e, como essa solução resolvia o problema, ela foi mantida para poder focar em outras partes do desenvolvimento do projeto. No setor de [Melhorias possíveis](#melhorias) comenta-se sobre a intenção de corrigir o problema.
-
 - Quanto ao banco de dados, optou-se por uma tabela exclusiva para sentiments e para code dado a possível entrada de novos valores (no caso de sentiments a inserção seria de maneira manual pensando-se em novas possíveis opniões, como por exemplo "MUITO POSITIVO" ou "EXTREMAMENTE NEGATIVO"). 
 
 ## Melhoras Possíveis <a id="melhorias"/>
@@ -190,8 +188,6 @@ Dentre as futuras melhorias, temos:
 - Melhorar a interface gráfica, visto que a mesma está extremamente "crua", porém executando bem sua função.
 
 - A chamada de rota do endpoint /send_feedback realiza dentro de seu escopo outra requisição para enviar o texto do campo para o endpoint /feedback, o que se entende como uma prática ruim. Desta maneira, uma futura melhoria seria separar esses eventos.
-
-- Resolver o problema referente aos arquivos estáticos informado em [Decisões de projeto](#projeto). A solução consiste em transferir os scripts para o arquivo .js em static e os styles para o .css no mesmo diretório. 
 
 - Gerar mais testes além dos testes unitários fornecidos.
 
